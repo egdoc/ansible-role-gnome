@@ -1,0 +1,21 @@
+---
+- name: Input settings
+  ansible.builtin.import_tasks: input.yml
+
+- name: Powersave settings
+  ansible.builtin.import_tasks: powersave.yml
+
+- name: Gnome-shell settings
+  ansible.builtin.import_tasks: gnome_shell.yml
+
+- name: Desktop settings
+  ansible.builtin.import_tasks: desktop.yml
+
+- name: Shortcut settings
+  ansible.builtin.import_tasks: keybindings.yml
+
+- name: Ensure additional dconf rules are written
+  community.general.dconf:
+    key: '{{ item.key }}'
+    value: '{{ item.value }}'
+  loop: '{{ gnome_additional_dconf_rules }}'

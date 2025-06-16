@@ -1,0 +1,15 @@
+---
+dependency:
+  name: galaxy
+driver:
+  name: docker
+platforms:
+  - name: rockylinux-9
+    image: docker.io/rockylinux:9
+    pre_build_image: true
+provisioner:
+  name: ansible
+  options:
+    D: true
+verifier:
+  name: ansible

@@ -1,0 +1,30 @@
+---
+- name: Set shortcut name
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.0 }}/name
+    value: "'{{ item.1 }}'"
+  with_indexed_items: '{{ gnome_custom_keybindings | map(attribute="name") }}'
+
+- name: Set shortcut command
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.0 }}/command
+    value: "'{{ item.1 }}'"
+  with_indexed_items: '{{ gnome_custom_keybindings | map(attribute="command") }}'
+
+- name: Set shortcut binding
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.0 }}/binding
+    value: "'{{ item.1 }}'"
+  with_indexed_items: '{{ gnome_custom_keybindings | map(attribute="binding") }}'
+
+- name: Set shortcut list fact
+  ansible.builtin.set_fact:
+    _custom_keybindings: '{{ _custom_keybindings | default([]) + [keybinding] }}'
+  vars:
+    keybinding: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom{{ item.0 }}/
+  with_indexed_items: '{{ gnome_custom_keybindings }}'
+
+- name: Ensure shortcuts list is populated
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings
+    value: '{{ (_custom_keybindings | length > 0) | ternary(_custom_keybindings, "@as []") }}'

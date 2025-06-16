@@ -1,0 +1,11 @@
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  roles:
+    - role: egdoc.gnome
+      gnome_shell_enabled_extensions:
+        - appindicatorsupport@gcjonas.gmail.com
+      gnome_additional_dconf_rules:
+        - key: /org/gnome/nautilus/default-zoom-level
+          value: "'small'"

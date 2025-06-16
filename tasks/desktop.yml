@@ -1,0 +1,5 @@
+---
+- name: Set event sounds state
+  community.general.dconf:
+    key: /org/gnome/desktop/sound/event-sounds
+    value: '{{ gnome_enable_event_sounds | bool }}'

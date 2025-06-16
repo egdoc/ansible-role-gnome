@@ -1,0 +1,25 @@
+---
+- name: Ensure session idle-delay time is set
+  community.general.dconf:
+    key: /org/gnome/desktop/session/idle-delay
+    value: "uint32 {{ gnome_session_idle_delay }}"
+
+- name: Ensure inactive action on battery is set
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type
+    value: "'{{ gnome_sleep_inactive_battery_action }}'"
+
+- name: Ensure inactive timeout on battery is set
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout
+    value: '{{ gnome_sleep_inactive_battery_timeout }}'
+
+- name: Ensure inactive action on ac is set
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type
+    value: "'{{ gnome_sleep_inactive_ac_action }}'"
+
+- name: Ensure inactive timeout on ac is set
+  community.general.dconf:
+    key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout
+    value: '{{ gnome_sleep_inactive_ac_timeout }}'

@@ -1,0 +1,10 @@
+---
+- name: Ensure favorite apps are displayed in GNOME shell dock
+  community.general.dconf:
+    key: /org/gnome/shell/favorite-apps
+    value: '{{ (gnome_dock_launchers | length > 0) | ternary(gnome_dock_launchers, "@as []") }}'
+
+- name: Ensure extensions are enabled
+  community.general.dconf:
+    key: /org/gnome/shell/enabled-extensions
+    value: '{{ (gnome_shell_enabled_extensions | length > 0) | ternary(gnome_shell_enabled_extensions, "@as []") }}'

@@ -1,0 +1,25 @@
+---
+gnome_dock_launchers:
+  - org.gnome.Software.desktop
+  - org.gnome.TextEditor.desktop
+  - org.gnome.Nautilus.desktop
+
+gnome_keyboard_layouts:
+  - us
+
+gnome_custom_keybindings:
+  - name: Launch terminal
+    command: ptyxis --new-window
+    binding: <Super>Return
+
+
+gnome_shell_enabled_extensions: []
+gnome_enable_event_sounds: false
+gnome_touchpad_tap_to_click: true
+gnome_mouse_natural_scroll: false
+gnome_session_idle_delay: 300
+gnome_sleep_inactive_ac_timeout: 1800
+gnome_sleep_inactive_ac_action: suspend
+gnome_sleep_inactive_battery_timeout: 900
+gnome_sleep_inactive_battery_action: suspend
+gnome_additional_dconf_rules: []

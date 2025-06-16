@@ -1,0 +1,12 @@
+---
+- name: Prepare
+  hosts: all
+  gather_facts: false
+  tasks:
+    - name: Ensure required packages are installed on target hosts
+      ansible.builtin.package:
+        name:
+          - dbus-daemon
+          - dconf
+          - python3-psutil
+        state: present

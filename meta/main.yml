@@ -1,0 +1,17 @@
+---
+galaxy_info:
+  author: Egidio Docile
+  namespace: egdoc
+  role_name: gnome
+  description: Ansible role to configure the GNOME desktop environment
+  license: license GPLv2
+  min_ansible_version: '2.1'
+  platforms:
+    - name: GenericLinux
+      version: all
+  galaxy_tags:
+    - linux
+    - gnome
+    - desktop
+
+dependencies: []

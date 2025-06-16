@@ -1,0 +1,15 @@
+---
+- name: Set touchpad tap-to-click state
+  community.general.dconf:
+    key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
+    value: '{{ gnome_touchpad_tap_to_click | bool }}'
+
+- name: Set mouse natural scroll state
+  community.general.dconf:
+    key: /org/gnome/desktop/peripherals/mouse/natural-scroll
+    value: '{{ gnome_mouse_natural_scroll | bool }}'
+
+- name: Ensure keyboard layouts are enabled
+  community.general.dconf:
+    key: /org/gnome/desktop/input-sources/sources
+    value: '{{ ["xkb"] | product(gnome_keyboard_layouts) | string }}'

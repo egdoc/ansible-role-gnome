@@ -1,0 +1,84 @@
+---
+argument_specs:
+  main:
+    options:
+      gnome_dock_launchers:
+        type: list
+        elements: str
+        default:
+          - org.gnome.Software.desktop
+          - org.gnome.TextEditor.desktop
+          - org.gnome.Nautilus.desktop
+      gnome_keyboard_layouts:
+        type: list
+        elements: str
+        default:
+          - us
+      gnome_custom_keybindings:
+        type: list
+        elements: dict
+        options:
+          name:
+            type: str
+            required: true
+          command:
+            type: str
+            required: true
+          binding:
+            type: str
+            required: true
+      gnome_shell_enabled_extensions:
+        type: list
+        elements: str
+        default: []
+      gnome_enable_event_sounds:
+        type: bool
+        default: true
+      gnome_touchpad_tap_to_click:
+        type: bool
+        default: true
+      gnome_mouse_natural_scroll:
+        type: bool
+        default: false
+      gnome_session_idle_delay:
+        type: int
+        default: 300
+      gnome_sleep_inactive_ac_timeout:
+        type: int
+        default: 1800
+      gnome_sleep_inactive_ac_action:
+        type: str
+        default: suspend
+        choices:
+          - blank
+          - suspend
+          - shutdown
+          - hibernate
+          - interactive
+          - nothing
+          - logout
+      gnome_sleep_inactive_battery_timeout:
+        type: int
+        default: 900
+      gnome_sleep_inactive_battery_action:
+        type: str
+        default: suspend
+        choices:
+          - blank
+          - suspend
+          - shutdown
+          - hibernate
+          - interactive
+          - nothing
+          - logout
+      gnome_additional_dconf_rules:
+        type: list
+        elements: dict
+        default: []
+        options:
+          key:
+            type: str
+            required: true
+          value:
+            type: raw
+            required: true
