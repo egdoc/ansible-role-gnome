@@ -1,0 +1,117 @@
+---
+- name: Verify
+  hosts: all
+  module_defaults:
+    community.general.dconf:
+      state: read
+
+  tasks:
+    - name: Read touchpad tap-to-click state
+      community.general.dconf:
+        key: /org/gnome/desktop/peripherals/touchpad/tap-to-click
+      register: tap_to_click
+
+    - name: Read natural scroll state
+      community.general.dconf:
+        key: /org/gnome/desktop/peripherals/mouse/natural-scroll
+      register: natural_scroll
+
+    - name: Read keyboard layouts
+      community.general.dconf:
+        key: /org/gnome/desktop/input-sources/sources
+      register: keyboard_layouts
+
+    - name: Read idle-delay time
+      community.general.dconf:
+        key: /org/gnome/desktop/session/idle-delay
+      register: idle_delay
+
+    - name: Read inactive battery action
+      community.general.dconf:
+        key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-type
+      register: inactive_battery_action
+
+    - name: Read inactive battery timeout
+      community.general.dconf:
+        key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-battery-timeout
+      register: inactive_battery_timeout
+
+    - name: Read inactive ac action
+      community.general.dconf:
+        key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-type
+      register: inactive_ac_action
+
+    - name: Read inactive ac timeout
+      community.general.dconf:
+        key: /org/gnome/settings-daemon/plugins/power/sleep-inactive-ac-timeout
+      register: inactive_ac_timeout
+
+    - name: Read favorite apps
+      community.general.dconf:
+        key: /org/gnome/shell/favorite-apps
+      register: favorite_apps
+
+    - name: Read enabled extensions
+      community.general.dconf:
+        key: /org/gnome/shell/enabled-extensions
+      register: enabled_extensions
+
+    - name: Read event sound state
+      community.general.dconf:
+        key: /org/gnome/desktop/sound/event-sounds
+      register: event_sounds
+
+    - name: Read app folders list
+      community.general.dconf:
+        key: /org/gnome/desktop/app-folders/folder-children
+      register: app_folders
+
+    - name: Read apps in Utilities folder
+      community.general.dconf:
+        key: /org/gnome/desktop/app-folders/folders/Utilities/{{ item }}
+      loop:
+        - name
+        - apps
+      register: utilities_app
+
+    - name: Read shortcuts list
+      community.general.dconf:
+        key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings
+      register: custom_keybindings
+
+    - name: Read shortcut values
+      community.general.dconf:
+        key: /org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/{{ item }}
+      register: custom_keybinding
+      loop:
+        - name
+        - command
+        - binding
+
+    - name: Read additional rule
+      community.general.dconf:
+        key: /org/gnome/nautilus/default-zoom-level
+      register: additional_rule
+
+    - name: Verify dconf values
+      ansible.builtin.assert:
+        that:
+          - tap_to_click.value == 'true'
+          - natural_scroll.value == 'false'
+          - keyboard_layouts.value == "[('xkb', 'us')]"
+          - idle_delay.value == 'uint32 300'
+          - inactive_battery_action.value == "'suspend'"
+          - inactive_battery_timeout.value == '900'
+          - inactive_ac_action.value == "'suspend'"
+          - inactive_ac_timeout.value == '1800'
+          - favorite_apps.value == "['org.gnome.Software.desktop', 'org.gnome.TextEditor.desktop', 'org.gnome.Nautilus.desktop']"
+          - enabled_extensions.value == "['appindicatorsupport@gcjonas.gmail.com']"
+          - event_sounds.value == 'false'
+          - app_folders.value == "['Utilities']"
+          - utilities_app.results.0.value == "'Utilities'"
+          - utilities_app.results.1.value == "['org.gnome.DiskUtility.desktop', 'org.gnome.font-viewer.desktop', 'org.gnome.Loupe.desktop']"
+          - custom_keybindings.value == "['/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/']"
+          - custom_keybinding.results.0.value == "'Launch terminal'"
+          - custom_keybinding.results.1.value == "'ptyxis --new-window'"
+          - custom_keybinding.results.2.value == "'<Super>Return'"
+          - additional_rule.value == "'small'"
