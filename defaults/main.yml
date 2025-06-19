@@ -12,6 +12,12 @@ gnome_custom_keybindings:
     command: ptyxis --new-window
     binding: <Super>Return
 
+gnome_app_folders:
+  - name: Utilities
+    apps:
+      - org.gnome.DiskUtility.desktop
+      - org.gnome.font-viewer.desktop
+      - org.gnome.Loupe.desktop
 
 gnome_shell_enabled_extensions: []
 gnome_enable_event_sounds: false

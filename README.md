@@ -23,6 +23,16 @@ List of application launchers to place in GNOME Shell dock.
 
 List of keyboard layouts you want to activate.
 
+        gnome_app_folders:
+            - name: Utilities
+              apps:
+                - org.gnome.DiskUtility.desktop
+                - org.gnome.font-viewer.desktop
+                - org.gnome.Loupe.desktop
+
+List of dictionaries describing GNOME app folders and the application launchers
+they should contain.
+
         gnome_custom_keybindings:
             - name: Launch terminal
               command: ptyxis --new-window

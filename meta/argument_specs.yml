@@ -27,6 +27,16 @@ argument_specs:
           binding:
             type: str
             required: true
+      gnome_app_folders:
+        type: list
+        elements: dict
+        options:
+          name:
+            type: str
+            required: true
+          apps:
+            type: list
+            default: []
       gnome_shell_enabled_extensions:
         type: list
         elements: str

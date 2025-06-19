@@ -3,3 +3,20 @@
   community.general.dconf:
     key: /org/gnome/desktop/sound/event-sounds
     value: '{{ gnome_enable_event_sounds | bool }}'
+
+- name: Create app folder
+  community.general.dconf:
+    key: /org/gnome/desktop/app-folders/folder-children
+    value: '{{ (gnome_app_folders | length > 0) | ternary(gnome_app_folders | map(attribute="name"), "@as []") }}'
+
+- name: Set app folder name
+  community.general.dconf:
+    key: /org/gnome/desktop/app-folders/folders/{{ item.name }}/name
+    value: "'{{ item.name }}'"
+  loop: '{{ gnome_app_folders }}'
+
+- name: Set app folder apps
+  community.general.dconf:
+    key: /org/gnome/desktop/app-folders/folders/{{ item.name }}/apps
+    value: '{{ (item.apps | length > 0) | ternary(item.apps, "@as []") }}'
+  loop: '{{ gnome_app_folders }}'
